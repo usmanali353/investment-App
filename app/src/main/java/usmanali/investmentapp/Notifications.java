@@ -3,17 +3,17 @@ package usmanali.investmentapp;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
+
+import usmanali.investmentapp.AsyncTasks.fetch_withdraw_notifications;
+import usmanali.investmentapp.AsyncTasks.get_all_withdraw_notifications_task;
 
 public class Notifications extends AppCompatActivity {
 List<user_info> user_infoList;

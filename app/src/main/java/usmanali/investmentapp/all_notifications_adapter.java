@@ -10,6 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import java.util.List;
 
+import usmanali.investmentapp.AsyncTasks.approve_notifications_task;
+import usmanali.investmentapp.AsyncTasks.send_withdrawal_request_task;
+import usmanali.investmentapp.AsyncTasks.withdraw_earning;
+
 public class all_notifications_adapter extends BaseAdapter {
     List<withdraw_notifications> notificationsList;
     Context context;

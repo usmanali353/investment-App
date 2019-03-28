@@ -1,4 +1,4 @@
-package usmanali.investmentapp;
+package usmanali.investmentapp.AsyncTasks;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,6 +21,10 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
 
+import usmanali.investmentapp.Admin_home;
+import usmanali.investmentapp.user_home;
+import usmanali.investmentapp.user_info;
+
 public class login_task extends AsyncTask<String,Void,Void> {
     ProgressDialog pd;
     String json;
@@ -32,7 +36,7 @@ public class login_task extends AsyncTask<String,Void,Void> {
     }
 
 
-    List<user_info> user_info;
+    List<usmanali.investmentapp.user_info> user_info;
 Context context;
 SharedPreferences prefs;
     StringBuilder sb=new StringBuilder();
@@ -80,10 +84,12 @@ SharedPreferences prefs;
             Toast.makeText(context,"Login Sucess",Toast.LENGTH_LONG).show();
             prefs.edit().putString("user_info",new Gson().toJson(user_info)).apply();
 
-            if(user_info.get(0).user_role.equals("Admin")){
+            if(user_info.get(0).getUser_role().equals("Admin")){
                 context.startActivity(new Intent(context,Admin_home.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                System.exit(0);
             }else {
                 context.startActivity(new Intent(context, user_home.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                System.exit(0);
             }
         }else {
             Toast.makeText(context,"Provide Valid email and password",Toast.LENGTH_LONG).show();

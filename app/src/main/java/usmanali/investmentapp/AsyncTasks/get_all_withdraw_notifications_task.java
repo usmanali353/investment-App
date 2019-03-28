@@ -1,8 +1,10 @@
-package usmanali.investmentapp;
+package usmanali.investmentapp.AsyncTasks;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -17,53 +19,53 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
 
-public class withdraw_earning extends AsyncTask<String,Void,String> {
-    String json;
-    StringBuilder sb=new StringBuilder();
-    Context context;
+import usmanali.investmentapp.all_notifications_adapter;
+import usmanali.investmentapp.withdraw_notifications;
+
+public class get_all_withdraw_notifications_task extends AsyncTask {
     ProgressDialog pd;
-    public withdraw_earning(Context context) {
+    Context context;
+    ListView notifications_List;
+    String json;
+    List<withdraw_notifications> notificationsList;
+    StringBuilder sb=new StringBuilder();
+    public get_all_withdraw_notifications_task(Context context,ListView notificationsList) {
         this.context = context;
         pd=new ProgressDialog(context);
         pd.setMessage("Please Wait...");
         pd.setCancelable(false);
+        this.notifications_List=notificationsList;
     }
 
     @Override
-    protected String doInBackground(String... strings) {
-        String email=strings[0];
-        String profit=strings[1];
+    protected Object doInBackground(Object[] objects) {
         try {
-            URL url=new URL("https://helloworldsolution12.000webhostapp.com/withdraw_earning.php");
+            URL url=new URL("https://helloworldsolution12.000webhostapp.com/get_all_withdraw_notifications.php");
             HttpURLConnection connection= (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
-            String info=URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"+URLEncoder.encode("profit","UTF-8")+"="+URLEncoder.encode(profit,"UTF-8");
-            writer.write(info);
-            writer.flush();
-            writer.close();
+            connection.setRequestMethod("GET");
             BufferedReader reader=new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
             while((json=reader.readLine())!=null){
                 sb.append(json);
             }
-            //user_info=new Gson().fromJson(sb.toString(),new TypeToken<List<user_info>>(){}.getType());
+            notificationsList=new Gson().fromJson(sb.toString(),new TypeToken<List<withdraw_notifications>>(){}.getType());
             //reader.close();
             Log.e("json",sb.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return sb.toString();
+        return null;
     }
-
     @Override
-    protected void onPostExecute(String response) {
-        super.onPostExecute(response);
+    protected void onPostExecute(Object o) {
+        super.onPostExecute(o);
         if(pd.isShowing())
             pd.dismiss();
-        Toast.makeText(context,response,Toast.LENGTH_LONG).show();
+        if(notificationsList!=null&&notificationsList.size()>0){
+             notifications_List.setAdapter(new all_notifications_adapter(notificationsList,context));
+        }else{
+            Toast.makeText(context,"No Notifications Yet",Toast.LENGTH_LONG).show();
+        }
     }
-
     @Override
     protected void onPreExecute() {
         super.onPreExecute();

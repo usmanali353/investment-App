@@ -1,4 +1,4 @@
-package usmanali.investmentapp;
+package usmanali.investmentapp.AsyncTasks;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -38,12 +38,13 @@ public class add_refered_customer_task extends AsyncTask<String,Void,String> {
         String percentage_profit=strings[7];
         String referer_email=strings[8];
         String ib_percentage_profit=strings[9];
+        String opening_date=strings[10];
         try {
             URL url =new URL("https://helloworldsolution12.000webhostapp.com/add_refered_customer.php");
             HttpURLConnection connection= (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             BufferedWriter writer =new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
-            String info=URLEncoder.encode("Name","UTF-8")+"="+URLEncoder.encode(name,"UTF-8")+"&"+URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(password,"UTF-8")+"&"+URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"+URLEncoder.encode("investment","UTF-8")+"="+URLEncoder.encode(investment,"UTF-8")+"&"+URLEncoder.encode("father_name","UTF-8")+"="+URLEncoder.encode(father_name,"UTF-8")+"&"+URLEncoder.encode("cnic","UTF-8")+"="+URLEncoder.encode(cnic,"UTF-8")+"&"+URLEncoder.encode("user_type","UTF-8")+"="+URLEncoder.encode(user_type,"UTF-8")+"&"+URLEncoder.encode("percentage_profit","UTF-8")+"="+URLEncoder.encode(percentage_profit,"UTF-8")+"&"+URLEncoder.encode("referer_email","UTF-8")+"="+URLEncoder.encode(referer_email,"UTF-8")+"&"+URLEncoder.encode("ib_percentage_profit","UTF-8")+"="+URLEncoder.encode(ib_percentage_profit,"UTF-8");
+            String info=URLEncoder.encode("Name","UTF-8")+"="+URLEncoder.encode(name,"UTF-8")+"&"+URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(password,"UTF-8")+"&"+URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"+URLEncoder.encode("investment","UTF-8")+"="+URLEncoder.encode(investment,"UTF-8")+"&"+URLEncoder.encode("father_name","UTF-8")+"="+URLEncoder.encode(father_name,"UTF-8")+"&"+URLEncoder.encode("cnic","UTF-8")+"="+URLEncoder.encode(cnic,"UTF-8")+"&"+URLEncoder.encode("user_type","UTF-8")+"="+URLEncoder.encode(user_type,"UTF-8")+"&"+URLEncoder.encode("percentage_profit","UTF-8")+"="+URLEncoder.encode(percentage_profit,"UTF-8")+"&"+URLEncoder.encode("referer_email","UTF-8")+"="+URLEncoder.encode(referer_email,"UTF-8")+"&"+URLEncoder.encode("ib_percentage_profit","UTF-8")+"="+URLEncoder.encode(ib_percentage_profit,"UTF-8")+"&"+URLEncoder.encode("opening_date","UTF-8")+"="+URLEncoder.encode(opening_date,"UTF-8");
             writer.write(info);
             writer.flush();
             writer.close();

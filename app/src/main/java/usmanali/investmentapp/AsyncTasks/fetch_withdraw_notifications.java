@@ -1,4 +1,4 @@
-package usmanali.investmentapp;
+package usmanali.investmentapp.AsyncTasks;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -18,6 +18,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
+
+import usmanali.investmentapp.notifications_list_adapter;
+import usmanali.investmentapp.withdraw_notifications;
 
 public class fetch_withdraw_notifications extends AsyncTask<String,Void,Void> {
     ProgressDialog progressDialog;

@@ -16,7 +16,6 @@
             app:ms_enableFloatingLabel="true"
             app:ms_floatingLabelText="Select IB"
             >
-
         </fr.ganfra.materialspinner.MaterialSpinner>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -148,6 +147,14 @@
                 />
 
         </android.support.design.widget.TextInputLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/select_date"
+            android:layout_below="@+id/profit_textinputlayout"
+            android:text="Select Date"
+            android:layout_margin="6dp"
+            />
     </RelativeLayout>
 
 </ScrollView>

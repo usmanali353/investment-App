@@ -1,6 +1,7 @@
-package usmanali.investmentapp;
+package usmanali.investmentapp.AsyncTasks;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,30 +11,44 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
+import usmanali.investmentapp.Admin_home;
+import usmanali.investmentapp.AsyncTasks.add_refered_customer_task;
+import usmanali.investmentapp.R;
+import usmanali.investmentapp.user_info;
 
 public class get_IB_customer_task extends AsyncTask {
     Context context;
     ProgressDialog pd;
-
+     DatePickerDialog datePickerDialog;
+     int day,mahena,saal;
     public get_IB_customer_task(Context context) {
         this.context = context;
         pd=new ProgressDialog(context);
         pd.setMessage("Please Wait...");
+        datePickerDialog = new DatePickerDialog(
+                context, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                day=dayOfMonth;
+                saal=year;
+                mahena=month;
+            }
+        }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
     }
 
     ArrayList<user_info> ib_customer_list;
@@ -74,8 +89,16 @@ public class get_IB_customer_task extends AsyncTask {
             final TextInputEditText cnic=add_user_view.findViewById(R.id.cnic_txt);
             final TextInputEditText percentage_profit=add_user_view.findViewById(R.id.profit_txt);
             final TextInputEditText ib_percentage_profit=add_user_view.findViewById(R.id.ib_profit_txt);
+            final Button select_date=add_user_view.findViewById(R.id.select_date);
+            select_date.setText(String.valueOf(day)+"."+String.valueOf(mahena)+"."+String.valueOf(saal));
+            select_date.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    datePickerDialog.show();
+                }
+            });
             for(int i=0;i<ib_customer_list.size();i++){
-                ib_customers_emails.add(ib_customer_list.get(i).email);
+                ib_customers_emails.add(ib_customer_list.get(i).getEmail());
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, ib_customers_emails);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -126,8 +149,10 @@ public class get_IB_customer_task extends AsyncTask {
                         spinner.setError("Select IB");
                     }else if(ib_percentage_profit.getText().toString().isEmpty()){
                         ib_percentage_profit.setError("Percentage Profit for IB is required");
-                    } else {
-                        new add_refered_customer_task(context).execute(name.getText().toString(),email.getText().toString(),password.getText().toString(),investment.getText().toString(),father_name.getText().toString(),cnic.getText().toString(),"Customer",percentage_profit.getText().toString(),spinner.getSelectedItem().toString(),ib_percentage_profit.getText().toString());
+                    }else if(select_date.getText().toString().equals("Select Date")) {
+                        Toast.makeText(context,"Please Select Date",Toast.LENGTH_LONG).show();
+                    }else {
+                        new add_refered_customer_task(context).execute(name.getText().toString(),email.getText().toString(),password.getText().toString(),investment.getText().toString(),father_name.getText().toString(),cnic.getText().toString(),"Customer",percentage_profit.getText().toString(),spinner.getSelectedItem().toString(),ib_percentage_profit.getText().toString(),select_date.getText().toString());
                     }
                 }
             });

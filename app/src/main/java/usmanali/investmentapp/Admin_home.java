@@ -1,15 +1,13 @@
 package usmanali.investmentapp;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -22,20 +20,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.Calendar;
 import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
+import usmanali.investmentapp.AsyncTasks.get_IB_customer_task;
+import usmanali.investmentapp.AsyncTasks.register_task;
+import usmanali.investmentapp.AsyncTasks.update_profit_task;
 
 public class Admin_home extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,DatePickerDialog.OnDateSetListener {
  Button add_user,send_profit;
  SharedPreferences prefs;
  List<user_info> user_infoList;
@@ -43,6 +47,7 @@ public class Admin_home extends AppCompatActivity
  ImageView roundicon;
  ColorGenerator generator;
  Button add_refered_customer;
+ int day,month,year;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +74,8 @@ public class Admin_home extends AppCompatActivity
         roundicon=header_view.findViewById(R.id.imageView);
         name.setText(user_infoList.get(0).Name);
         email.setText(user_infoList.get(0).email);
+        final DatePickerDialog datePickerDialog = new DatePickerDialog(
+                Admin_home.this, Admin_home.this, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         TextDrawable drawable=TextDrawable.builder().beginConfig().width(150).height(150).endConfig().buildRound(user_infoList.get(0).Name.substring(0,1).toUpperCase(),iconcolor);
         roundicon.setImageDrawable(drawable);
         navigationView.addHeaderView(header_view);
@@ -84,6 +91,15 @@ public class Admin_home extends AppCompatActivity
                 final TextInputEditText father_name=add_user_view.findViewById(R.id.father_name_txt);
                 final TextInputEditText cnic=add_user_view.findViewById(R.id.cnic_txt);
                 final TextInputEditText percentage_profit=add_user_view.findViewById(R.id.profit_txt);
+                final Button select_date=add_user_view.findViewById(R.id.select_date);
+                select_date.setText(String.valueOf(day)+"."+String.valueOf(month)+"."+String.valueOf(year));
+                select_date.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        datePickerDialog.show();
+                    }
+                });
                 String[] ITEMS = {"Customer","IB"};
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(Admin_home.this, android.R.layout.simple_spinner_item, ITEMS);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -132,8 +148,10 @@ public class Admin_home extends AppCompatActivity
                              percentage_profit.setError("Profit Percentage should be atleast 10 percent");
                          }else if(spinner.getSelectedItem().toString().equals("User Type")) {
                              spinner.setError("Select User Type");
-                         }else {
-                             new register_task(Admin_home.this).execute(name.getText().toString(),email.getText().toString(),password.getText().toString(),investment.getText().toString(),father_name.getText().toString(),cnic.getText().toString(),spinner.getSelectedItem().toString(),percentage_profit.getText().toString(),"");
+                         }else if(select_date.getText().toString().equals("Select Date")) {
+                             Toast.makeText(Admin_home.this,"Please Select Date",Toast.LENGTH_LONG).show();
+                         }else{
+                             new register_task(Admin_home.this).execute(name.getText().toString(),email.getText().toString(),password.getText().toString(),investment.getText().toString(),father_name.getText().toString(),cnic.getText().toString(),spinner.getSelectedItem().toString(),percentage_profit.getText().toString(),"",select_date.getText().toString());
                          }
                     }
                 });
@@ -198,9 +216,18 @@ public class Admin_home extends AppCompatActivity
                finish();
            }else if(id==R.id.withdraw_request){
                startActivity(new Intent(Admin_home.this,Notifications.class).putExtra("role","Admin"));
+           }else if(id==R.id.accounts_details){
+               startActivity(new Intent(Admin_home.this,Account_detail.class).putExtra("role","Admin"));
            }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+           this.day=dayOfMonth;
+           this.month=month;
+           this.year=year;
     }
 }

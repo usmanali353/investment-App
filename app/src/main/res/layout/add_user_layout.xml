@@ -121,6 +121,7 @@
                 />
 
         </android.support.design.widget.TextInputLayout>
+
         <fr.ganfra.materialspinner.MaterialSpinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -133,5 +134,13 @@
             >
 
         </fr.ganfra.materialspinner.MaterialSpinner>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/select_date"
+            android:layout_below="@+id/spinner"
+            android:text="Select Date"
+            android:layout_margin="6dp"
+            />
     </RelativeLayout>
 </ScrollView>
