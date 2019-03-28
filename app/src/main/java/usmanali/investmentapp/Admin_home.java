@@ -55,13 +55,10 @@ public class Admin_home extends AppCompatActivity
         setContentView(R.layout.activity_admin_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         generator=ColorGenerator.MATERIAL;
         int iconcolor=generator.getRandomColor();
-
         prefs=PreferenceManager.getDefaultSharedPreferences(this);
        user_infoList=new Gson().fromJson(prefs.getString("user_info",""),new TypeToken<List<user_info>>(){}.getType());
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

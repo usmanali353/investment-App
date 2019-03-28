@@ -52,7 +52,6 @@ public class get_IB_customer_task extends AsyncTask {
             }
         }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
     }
-
     ArrayList<user_info> ib_customer_list;
     ArrayList<String> ib_customers_emails=new ArrayList<>();
     String json;
