@@ -89,6 +89,7 @@ public class Admin_home extends AppCompatActivity
                 final TextInputEditText father_name=add_user_view.findViewById(R.id.father_name_txt);
                 final TextInputEditText cnic=add_user_view.findViewById(R.id.cnic_txt);
                 final TextInputEditText percentage_profit=add_user_view.findViewById(R.id.profit_txt);
+                final TextInputEditText investment_period=add_user_view.findViewById(R.id.investment_period_txt);
                  select_date=add_user_view.findViewById(R.id.select_date);
 
                 select_date.setOnClickListener(new View.OnClickListener() {
@@ -148,6 +149,8 @@ public class Admin_home extends AppCompatActivity
                              spinner.setError("Select User Type");
                          }else if(select_date.getText().toString().equals("Select Date")) {
                              Toast.makeText(Admin_home.this,"Please Select Date",Toast.LENGTH_LONG).show();
+                         }else if(investment_period.getText().toString().isEmpty()){
+                             investment_period.setError("Investment Period is Required");
                          }else{
                              new register_task(Admin_home.this).execute(name.getText().toString(),email.getText().toString(),password.getText().toString(),investment.getText().toString(),father_name.getText().toString(),cnic.getText().toString(),spinner.getSelectedItem().toString(),percentage_profit.getText().toString(),"",select_date.getText().toString());
                          }

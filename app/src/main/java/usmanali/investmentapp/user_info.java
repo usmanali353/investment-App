@@ -9,13 +9,7 @@ public class user_info {
         this.email = email;
     }
 
-    public String getUser_role() {
-        return user_role;
-    }
 
-    public void setUser_role(String user_role) {
-        this.user_role = user_role;
-    }
 
     public String getFather_name() {
         return father_name;
@@ -106,7 +100,16 @@ public class user_info {
     }
 
     String email;
-    String user_role;
+    String investment_period;
+
+    public String getInvestment_period() {
+        return investment_period;
+    }
+
+    public void setInvestment_period(String investment_period) {
+        this.investment_period = investment_period;
+    }
+
     String father_name;
     String CNIC;
     String password;

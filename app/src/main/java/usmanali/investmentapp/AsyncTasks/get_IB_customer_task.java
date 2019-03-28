@@ -91,6 +91,7 @@ public class get_IB_customer_task extends AsyncTask {
             final TextInputEditText percentage_profit=add_user_view.findViewById(R.id.profit_txt);
             final TextInputEditText ib_percentage_profit=add_user_view.findViewById(R.id.ib_profit_txt);
              select_date=add_user_view.findViewById(R.id.select_date);
+             final TextInputEditText investment_period=add_user_view.findViewById(R.id.investment_period_txt);
             select_date.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -151,8 +152,10 @@ public class get_IB_customer_task extends AsyncTask {
                         ib_percentage_profit.setError("Percentage Profit for IB is required");
                     }else if(select_date.getText().toString().equals("Select Date")) {
                         Toast.makeText(context,"Please Select Date",Toast.LENGTH_LONG).show();
-                    }else {
-                        new add_refered_customer_task(context).execute(name.getText().toString(),email.getText().toString(),password.getText().toString(),investment.getText().toString(),father_name.getText().toString(),cnic.getText().toString(),"Customer",percentage_profit.getText().toString(),spinner.getSelectedItem().toString(),ib_percentage_profit.getText().toString(),select_date.getText().toString());
+                    }else if(investment_period.getText().toString().isEmpty()){
+                        investment_period.setError("Investment Period is Required");
+                    }else{
+                        new add_refered_customer_task(context).execute(name.getText().toString(),email.getText().toString(),password.getText().toString(),investment.getText().toString(),father_name.getText().toString(),cnic.getText().toString(),"Customer",percentage_profit.getText().toString(),spinner.getSelectedItem().toString(),ib_percentage_profit.getText().toString(),select_date.getText().toString(),investment_period.getText().toString());
                     }
                 }
             });

@@ -33,7 +33,7 @@ CheckBox cb;
         prefs=PreferenceManager.getDefaultSharedPreferences(this);
         List<user_info> user_infoList=new Gson().fromJson(prefs.getString("user_info",""),new TypeToken<List<user_info>>(){}.getType());
         if(user_infoList!=null&&user_infoList.size()>0){
-            if(user_infoList.get(0).user_role.equals("Admin")){
+            if(user_infoList.get(0).user_type.equals("Admin")){
                 startActivity(new Intent(Login.this,Admin_home.class));
                 finish();
             }else{

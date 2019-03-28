@@ -38,12 +38,13 @@ public class register_task extends AsyncTask<String,Void,String> {
         String percentage_profit=strings[7];
         String referer_email=strings[8];
         String opening_date=strings[9];
+        String investment_period=strings[10];
         try {
             URL url =new URL("https://helloworldsolution12.000webhostapp.com/Register.php");
             HttpURLConnection connection= (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             BufferedWriter writer =new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
-            String info=URLEncoder.encode("Name","UTF-8")+"="+URLEncoder.encode(name,"UTF-8")+"&"+URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(password,"UTF-8")+"&"+URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"+URLEncoder.encode("investment","UTF-8")+"="+URLEncoder.encode(investment,"UTF-8")+"&"+URLEncoder.encode("father_name","UTF-8")+"="+URLEncoder.encode(father_name,"UTF-8")+"&"+URLEncoder.encode("cnic","UTF-8")+"="+URLEncoder.encode(cnic,"UTF-8")+"&"+URLEncoder.encode("user_type","UTF-8")+"="+URLEncoder.encode(user_type,"UTF-8")+"&"+URLEncoder.encode("percentage_profit","UTF-8")+"="+URLEncoder.encode(percentage_profit,"UTF-8")+"&"+URLEncoder.encode("referer_email","UTF-8")+"="+URLEncoder.encode(referer_email,"UTF-8")+"&"+URLEncoder.encode("opening_date","UTF-8")+"="+URLEncoder.encode(opening_date,"UTF-8");
+            String info=URLEncoder.encode("Name","UTF-8")+"="+URLEncoder.encode(name,"UTF-8")+"&"+URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(password,"UTF-8")+"&"+URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"+URLEncoder.encode("investment","UTF-8")+"="+URLEncoder.encode(investment,"UTF-8")+"&"+URLEncoder.encode("father_name","UTF-8")+"="+URLEncoder.encode(father_name,"UTF-8")+"&"+URLEncoder.encode("cnic","UTF-8")+"="+URLEncoder.encode(cnic,"UTF-8")+"&"+URLEncoder.encode("user_type","UTF-8")+"="+URLEncoder.encode(user_type,"UTF-8")+"&"+URLEncoder.encode("percentage_profit","UTF-8")+"="+URLEncoder.encode(percentage_profit,"UTF-8")+"&"+URLEncoder.encode("referer_email","UTF-8")+"="+URLEncoder.encode(referer_email,"UTF-8")+"&"+URLEncoder.encode("opening_date","UTF-8")+"="+URLEncoder.encode(opening_date,"UTF-8")+"&"+URLEncoder.encode("investment_period","UTF-8")+"="+URLEncoder.encode(investment_period,"UTF-8");
              writer.write(info);
              writer.flush();
              writer.close();
