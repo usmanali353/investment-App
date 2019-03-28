@@ -36,6 +36,7 @@ public class get_IB_customer_task extends AsyncTask {
     ProgressDialog pd;
      DatePickerDialog datePickerDialog;
      int day,mahena,saal;
+     Button select_date;
     public get_IB_customer_task(Context context) {
         this.context = context;
         pd=new ProgressDialog(context);
@@ -47,6 +48,7 @@ public class get_IB_customer_task extends AsyncTask {
                 day=dayOfMonth;
                 saal=year;
                 mahena=month;
+                select_date.setText(String.valueOf(day)+"."+String.valueOf(mahena)+"."+String.valueOf(saal));
             }
         }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
     }
@@ -89,8 +91,7 @@ public class get_IB_customer_task extends AsyncTask {
             final TextInputEditText cnic=add_user_view.findViewById(R.id.cnic_txt);
             final TextInputEditText percentage_profit=add_user_view.findViewById(R.id.profit_txt);
             final TextInputEditText ib_percentage_profit=add_user_view.findViewById(R.id.ib_profit_txt);
-            final Button select_date=add_user_view.findViewById(R.id.select_date);
-            select_date.setText(String.valueOf(day)+"."+String.valueOf(mahena)+"."+String.valueOf(saal));
+             select_date=add_user_view.findViewById(R.id.select_date);
             select_date.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

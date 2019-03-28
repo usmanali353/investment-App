@@ -48,6 +48,7 @@ public class Admin_home extends AppCompatActivity
  ColorGenerator generator;
  Button add_refered_customer;
  int day,month,year;
+     Button select_date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,8 +92,8 @@ public class Admin_home extends AppCompatActivity
                 final TextInputEditText father_name=add_user_view.findViewById(R.id.father_name_txt);
                 final TextInputEditText cnic=add_user_view.findViewById(R.id.cnic_txt);
                 final TextInputEditText percentage_profit=add_user_view.findViewById(R.id.profit_txt);
-                final Button select_date=add_user_view.findViewById(R.id.select_date);
-                select_date.setText(String.valueOf(day)+"."+String.valueOf(month)+"."+String.valueOf(year));
+                 select_date=add_user_view.findViewById(R.id.select_date);
+
                 select_date.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -229,5 +230,6 @@ public class Admin_home extends AppCompatActivity
            this.day=dayOfMonth;
            this.month=month;
            this.year=year;
+        select_date.setText(String.valueOf(day)+"."+String.valueOf(month)+"."+String.valueOf(year));
     }
 }
