@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -20,6 +21,7 @@ public class Login extends AppCompatActivity {
 TextInputEditText email,password;
 Button login_btn;
 SharedPreferences prefs;
+CheckBox cb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,7 @@ SharedPreferences prefs;
         email=findViewById(R.id.email_txt);
         password=findViewById(R.id.password_txt);
         login_btn=findViewById(R.id.btn);
+        cb=findViewById(R.id.cb);
         prefs=PreferenceManager.getDefaultSharedPreferences(this);
         List<user_info> user_infoList=new Gson().fromJson(prefs.getString("user_info",""),new TypeToken<List<user_info>>(){}.getType());
         if(user_infoList!=null&&user_infoList.size()>0){
@@ -48,7 +51,7 @@ SharedPreferences prefs;
                 }else if(password.getText().toString().length()<6){
                     password.setError("Password is too short");
                 }else{
-                   new login_task(Login.this).execute(email.getText().toString(),password.getText().toString(),email.getText().toString());
+                   new login_task(Login.this,cb.isChecked()).execute(email.getText().toString(),password.getText().toString(),email.getText().toString());
                 }
             }
         });

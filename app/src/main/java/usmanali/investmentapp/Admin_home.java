@@ -204,6 +204,14 @@ public class Admin_home extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(!prefs.getBoolean("keep_info",false)){
+            prefs.edit().remove("user_info").apply();
+        }
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -229,4 +237,5 @@ public class Admin_home extends AppCompatActivity
            this.year=year;
         select_date.setText(String.valueOf(day)+"."+String.valueOf(month)+"."+String.valueOf(year));
     }
+
 }

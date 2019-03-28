@@ -159,4 +159,11 @@ public class user_home extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(!prefs.getBoolean("keep_info",false)){
+            prefs.edit().remove("user_info").apply();
+        }
+    }
 }

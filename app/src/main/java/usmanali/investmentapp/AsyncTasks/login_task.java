@@ -28,11 +28,13 @@ import usmanali.investmentapp.user_info;
 public class login_task extends AsyncTask<String,Void,Void> {
     ProgressDialog pd;
     String json;
-    public login_task( Context context) {
+    boolean isChecked;
+    public login_task( Context context,boolean isChecked) {
         this.context = context;
         prefs=PreferenceManager.getDefaultSharedPreferences(context);
         pd=new ProgressDialog(context);
         pd.setMessage("Please Wait....");
+        this.isChecked=isChecked;
     }
 
 
@@ -83,7 +85,11 @@ SharedPreferences prefs;
         if(user_info!=null&&user_info.size()>0){
             Toast.makeText(context,"Login Sucess",Toast.LENGTH_LONG).show();
             prefs.edit().putString("user_info",new Gson().toJson(user_info)).apply();
-
+            if (isChecked) {
+                prefs.edit().putBoolean("keep_info", true).apply();
+            }else{
+                prefs.edit().putBoolean("keep_info", false).apply();
+            }
             if(user_info.get(0).getUser_role().equals("Admin")){
                 context.startActivity(new Intent(context,Admin_home.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 System.exit(0);

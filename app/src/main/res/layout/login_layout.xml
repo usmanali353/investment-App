@@ -43,11 +43,19 @@
             android:inputType="textPassword"
             />
     </android.support.design.widget.TextInputLayout>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password_textinputlayout"
+        android:text="Remember Me"
+        android:layout_marginStart="16dp"
+        android:id="@+id/cb"
+        />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn"
-        android:layout_below="@+id/password_textinputlayout"
+        android:layout_below="@+id/cb"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
