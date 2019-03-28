@@ -24,7 +24,7 @@ public class get_all_accounts extends AsyncTask{
     String json;
     List<user_info> userInfoList;
     StringBuilder sb=new StringBuilder();
-    String[] titles={"Name","Father Name","CNIC","Email","Investment","Earning","Profit Percentage","Referor Email","Account Opening Date","User Type"};
+    String[] titles={"Name","CNIC","Email","Investment","Earning","Profit Percentage","Referor Email","Account Opening Date","Investment Period","User Type"};
     public get_all_accounts(Context context,LegacyTableView tableView) {
         this.context = context;
         pd=new ProgressDialog(context);
@@ -60,9 +60,9 @@ public class get_all_accounts extends AsyncTask{
             LegacyTableView.insertLegacyTitle(titles);
             notifications_List.setTitle(LegacyTableView.readLegacyTitle());
             for (int i=0;i<userInfoList.size();i++){
-                LegacyTableView.insertLegacyContent(userInfoList.get(i).Name,userInfoList.get(i).father_name,userInfoList.get(i).CNIC,userInfoList.get(i).email,String.valueOf(userInfoList.get(i).investment),String.valueOf(userInfoList.get(i).earning),String.valueOf(userInfoList.get(i).profit_percentage),userInfoList.get(i).referer_email,userInfoList.get(i).opening_date,userInfoList.get(i).user_type);
+                LegacyTableView.insertLegacyContent(userInfoList.get(i).Name,userInfoList.get(i).CNIC,userInfoList.get(i).email,String.valueOf(userInfoList.get(i).investment),String.valueOf(userInfoList.get(i).earning),String.valueOf(userInfoList.get(i).profit_percentage),userInfoList.get(i).referer_email,userInfoList.get(i).opening_date,userInfoList.get(i).investment_period,userInfoList.get(i).user_type);
                 }
-            notifications_List.setTheme(4);
+
                 notifications_List.setZoomEnabled(true);
                 notifications_List.setShowZoomControls(true);
             notifications_List.setContent(LegacyTableView.readLegacyContent());
