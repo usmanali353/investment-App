@@ -62,7 +62,7 @@ public class get_all_accounts extends AsyncTask{
             for (int i=0;i<userInfoList.size();i++){
                 LegacyTableView.insertLegacyContent(userInfoList.get(i).Name,userInfoList.get(i).father_name,userInfoList.get(i).CNIC,userInfoList.get(i).email,String.valueOf(userInfoList.get(i).investment),String.valueOf(userInfoList.get(i).earning),String.valueOf(userInfoList.get(i).profit_percentage),userInfoList.get(i).referer_email,userInfoList.get(i).opening_date,userInfoList.get(i).user_type);
                 }
-            notifications_List.setHeaderBackgroundLinearGradientTOP("#009688");
+            notifications_List.setTheme(4);
                 notifications_List.setZoomEnabled(true);
                 notifications_List.setShowZoomControls(true);
             notifications_List.setContent(LegacyTableView.readLegacyContent());

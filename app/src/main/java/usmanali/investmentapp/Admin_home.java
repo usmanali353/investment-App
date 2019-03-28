@@ -152,7 +152,7 @@ public class Admin_home extends AppCompatActivity
                          }else if(investment_period.getText().toString().isEmpty()){
                              investment_period.setError("Investment Period is Required");
                          }else{
-                             new register_task(Admin_home.this).execute(name.getText().toString(),email.getText().toString(),password.getText().toString(),investment.getText().toString(),father_name.getText().toString(),cnic.getText().toString(),spinner.getSelectedItem().toString(),percentage_profit.getText().toString(),"",select_date.getText().toString());
+                             new register_task(Admin_home.this).execute(name.getText().toString(),email.getText().toString(),password.getText().toString(),investment.getText().toString(),father_name.getText().toString(),cnic.getText().toString(),spinner.getSelectedItem().toString(),percentage_profit.getText().toString(),"",select_date.getText().toString(),investment_period.getText().toString());
                          }
                     }
                 });
@@ -238,7 +238,7 @@ public class Admin_home extends AppCompatActivity
            this.day=dayOfMonth;
            this.month=month;
            this.year=year;
-        select_date.setText(String.valueOf(day)+"."+String.valueOf(month)+"."+String.valueOf(year));
+        select_date.setText(String.valueOf(day)+"."+String.valueOf(month+1)+"."+String.valueOf(year));
     }
 
 }

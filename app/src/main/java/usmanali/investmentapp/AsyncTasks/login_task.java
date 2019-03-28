@@ -90,7 +90,7 @@ SharedPreferences prefs;
             }else{
                 prefs.edit().putBoolean("keep_info", false).apply();
             }
-            if(user_info.get(0).getUser_role().equals("Admin")){
+            if(user_info.get(0).getUser_type().equals("Admin")){
                 context.startActivity(new Intent(context,Admin_home.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 System.exit(0);
             }else {

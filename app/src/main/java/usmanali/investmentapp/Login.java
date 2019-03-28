@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -32,11 +33,14 @@ CheckBox cb;
         cb=findViewById(R.id.cb);
         prefs=PreferenceManager.getDefaultSharedPreferences(this);
         List<user_info> user_infoList=new Gson().fromJson(prefs.getString("user_info",""),new TypeToken<List<user_info>>(){}.getType());
+
         if(user_infoList!=null&&user_infoList.size()>0){
             if(user_infoList.get(0).user_type.equals("Admin")){
+                Log.e("user_type",user_infoList.get(0).user_type);
                 startActivity(new Intent(Login.this,Admin_home.class));
                 finish();
             }else{
+                Log.e("user_type",user_infoList.get(0).user_type);
                 startActivity(new Intent(Login.this,user_home.class));
                 finish();
             }
