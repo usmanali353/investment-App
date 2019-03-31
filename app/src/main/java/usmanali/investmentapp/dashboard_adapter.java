@@ -32,7 +32,6 @@ public class dashboard_adapter extends RecyclerView.Adapter<dashboard_adapter.da
     @Override
     public void onBindViewHolder(@NonNull dashboard_viewholder dashboard_viewholder, int i) {
        List<user_info> user_infoList=new Gson().fromJson(prefs.getString("user_info",""),new TypeToken<List<user_info>>(){}.getType());
-
         dashboard_viewholder.long_text.setText(model.get(i).long_text);
      if(i==0){
          dashboard_viewholder.short_text.setText("Rs "+user_infoList.get(0).investment);

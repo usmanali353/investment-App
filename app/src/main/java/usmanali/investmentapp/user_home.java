@@ -31,6 +31,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
+import usmanali.investmentapp.AsyncTasks.login_task;
 import usmanali.investmentapp.AsyncTasks.send_withdrawal_request_task;
 
 public class user_home extends AppCompatActivity
@@ -75,6 +76,7 @@ public class user_home extends AppCompatActivity
         model=new ArrayList<>();
         model.add(new dashboard_model(R.drawable.investment_icon,"Your Investment"));
         model.add(new dashboard_model(R.drawable.return_on_investment,"Your Earning"));
+        new login_task(this,prefs.getBoolean("keep_info",false)).execute(user_infoList.get(0).email,user_infoList.get(0).password,user_infoList.get(0).email);
         list.setAdapter(new dashboard_adapter(model,user_home.this));
     }
 
@@ -145,6 +147,8 @@ public class user_home extends AppCompatActivity
 
                    }else {
                        new send_withdrawal_request_task(user_home.this).execute(String.valueOf(System.currentTimeMillis()),user_infoList.get(0).email+" has requested withdraw of Rs "+profit.getText().toString(),user_infoList.get(0).email,profit.getText().toString(),"No");
+                       startActivity(new Intent(user_home.this,user_home.class));
+                       finish();
                    }
                }
            });
