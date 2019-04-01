@@ -1,25 +1,36 @@
 package usmanali.investmentapp;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import java.util.List;
 
 import usmanali.investmentapp.AsyncTasks.approve_notifications_task;
+import usmanali.investmentapp.AsyncTasks.get_all_withdraw_notifications_task;
 import usmanali.investmentapp.AsyncTasks.send_withdrawal_request_task;
 import usmanali.investmentapp.AsyncTasks.withdraw_earning;
 
 public class all_notifications_adapter extends BaseAdapter {
     List<withdraw_notifications> notificationsList;
     Context context;
-    public all_notifications_adapter(List<withdraw_notifications> notificationsList,Context context) {
+    ListView nl;
+    SwipeRefreshLayout srl;
+    SharedPreferences prefs;
+    public all_notifications_adapter(List<withdraw_notifications> notificationsList, Context context, ListView notification_list, SwipeRefreshLayout srl) {
         this.notificationsList = notificationsList;
         this.context=context;
+        this.nl=notification_list;
+        this.srl=srl;
+        prefs= PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Override
@@ -61,7 +72,10 @@ public class all_notifications_adapter extends BaseAdapter {
                             new approve_notifications_task(context).execute(String.valueOf(notificationsList.get(position).id));
                             new send_withdrawal_request_task(context).execute(String.valueOf(System.currentTimeMillis()),"Your withdraw Request for Rs "+notificationsList.get(position).withdraw_amount+" is Approved by admin",notificationsList.get(position).customer_email, String.valueOf(notificationsList.get(position).withdraw_amount),"Yes");
                             new withdraw_earning(context).execute(notificationsList.get(position).customer_email, String.valueOf(notificationsList.get(position).withdraw_amount));
-
+                            new get_all_withdraw_notifications_task(context,nl,srl).execute();
+                            if(notificationsList.size()==0){
+                                notificationsList.clear();
+                            }
                         }
                     }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override

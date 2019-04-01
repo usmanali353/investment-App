@@ -2,7 +2,10 @@ package usmanali.investmentapp.AsyncTasks;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -20,6 +23,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 import usmanali.investmentapp.notifications_list_adapter;
+import usmanali.investmentapp.user_info;
 import usmanali.investmentapp.withdraw_notifications;
 
 public class fetch_withdraw_notifications extends AsyncTask<String,Void,Void> {
@@ -29,12 +33,16 @@ public class fetch_withdraw_notifications extends AsyncTask<String,Void,Void> {
    ListView notification_list;
    List<withdraw_notifications> notificationsList;
    StringBuilder sb=new StringBuilder();
-    public fetch_withdraw_notifications(Context context,ListView notification_list) {
+   SwipeRefreshLayout srl;
+   SharedPreferences prefs;
+    public fetch_withdraw_notifications(Context context,ListView notification_list,SwipeRefreshLayout srl) {
         this.context = context;
         progressDialog=new ProgressDialog(context);
         progressDialog.setMessage("Please Wait...");
         progressDialog.setCancelable(false);
         this.notification_list=notification_list;
+        this.srl=srl;
+        prefs= PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Override
@@ -66,14 +74,21 @@ public class fetch_withdraw_notifications extends AsyncTask<String,Void,Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog.show();
+        srl.setRefreshing(true);
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        if(progressDialog.isShowing())
-            progressDialog.dismiss();
+        srl.setRefreshing(false);
+       final List<user_info> user_infoList=new Gson().fromJson(prefs.getString("user_info",""),new TypeToken<List<user_info>>(){}.getType());
+
+        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new fetch_withdraw_notifications(context,notification_list,srl).execute(user_infoList.get(0).getEmail());
+            }
+        });
         if(notificationsList!=null&&notificationsList.size()>0){
           notification_list.setAdapter(new notifications_list_adapter(notificationsList));
         }else{

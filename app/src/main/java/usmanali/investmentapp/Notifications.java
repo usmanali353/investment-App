@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ public class Notifications extends AppCompatActivity {
 List<user_info> user_infoList;
 SharedPreferences prefs;
 ListView notification_list;
+SwipeRefreshLayout srl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,13 +30,14 @@ ListView notification_list;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         prefs=PreferenceManager.getDefaultSharedPreferences(this);
+        srl=findViewById(R.id.swipe_refresh);
         user_infoList=new Gson().fromJson(prefs.getString("user_info",""),new TypeToken<List<user_info>>(){}.getType());
         notification_list=findViewById(R.id.notification_list);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if(getIntent().getStringExtra("role").equals("Customer")) {
-            new fetch_withdraw_notifications(this, notification_list).execute(user_infoList.get(0).email);
+            new fetch_withdraw_notifications(this, notification_list,srl).execute(user_infoList.get(0).email);
         }else{
-            new get_all_withdraw_notifications_task(this, notification_list).execute();
+            new get_all_withdraw_notifications_task(this, notification_list,srl).execute();
         }
     }
 

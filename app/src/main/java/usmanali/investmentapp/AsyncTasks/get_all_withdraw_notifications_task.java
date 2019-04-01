@@ -3,6 +3,7 @@ package usmanali.investmentapp.AsyncTasks;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -29,12 +30,14 @@ public class get_all_withdraw_notifications_task extends AsyncTask {
     String json;
     List<withdraw_notifications> notificationsList;
     StringBuilder sb=new StringBuilder();
-    public get_all_withdraw_notifications_task(Context context,ListView notificationsList) {
+    SwipeRefreshLayout srl;
+    public get_all_withdraw_notifications_task(Context context, ListView notificationsList, SwipeRefreshLayout srl) {
         this.context = context;
         pd=new ProgressDialog(context);
         pd.setMessage("Please Wait...");
         pd.setCancelable(false);
         this.notifications_List=notificationsList;
+        this.srl=srl;
     }
 
     @Override
@@ -58,10 +61,15 @@ public class get_all_withdraw_notifications_task extends AsyncTask {
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
-        if(pd.isShowing())
-            pd.dismiss();
+         srl.setRefreshing(false);
+         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+             @Override
+             public void onRefresh() {
+               new get_all_withdraw_notifications_task(context,notifications_List,srl).execute();
+             }
+         });
         if(notificationsList!=null&&notificationsList.size()>0){
-             notifications_List.setAdapter(new all_notifications_adapter(notificationsList,context));
+             notifications_List.setAdapter(new all_notifications_adapter(notificationsList,context,notifications_List,srl));
         }else{
             Toast.makeText(context,"No Notifications Yet",Toast.LENGTH_LONG).show();
         }
@@ -69,6 +77,7 @@ public class get_all_withdraw_notifications_task extends AsyncTask {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        pd.show();
+       // pd.show();
+        srl.setRefreshing(true);
     }
 }

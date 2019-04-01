@@ -36,11 +36,9 @@ CheckBox cb;
 
         if(user_infoList!=null&&user_infoList.size()>0){
             if(user_infoList.get(0).user_type.equals("Admin")){
-                Log.e("user_type",user_infoList.get(0).user_type);
                 startActivity(new Intent(Login.this,Admin_home.class));
                 finish();
             }else{
-                Log.e("user_type",user_infoList.get(0).user_type);
                 startActivity(new Intent(Login.this,user_home.class));
                 finish();
             }

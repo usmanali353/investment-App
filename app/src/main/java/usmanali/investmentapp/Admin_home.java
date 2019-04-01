@@ -222,6 +222,7 @@ public class Admin_home extends AppCompatActivity
         int id = item.getItemId();
            if(id==R.id.signout){
                prefs.edit().remove("user_info").apply();
+               prefs.edit().remove("keep_info").apply();
                finish();
            }else if(id==R.id.withdraw_request){
                startActivity(new Intent(Admin_home.this,Notifications.class).putExtra("role","Admin"));
