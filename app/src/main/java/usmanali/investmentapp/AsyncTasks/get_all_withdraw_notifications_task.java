@@ -69,8 +69,12 @@ public class get_all_withdraw_notifications_task extends AsyncTask {
              }
          });
         if(notificationsList!=null&&notificationsList.size()>0){
-             notifications_List.setAdapter(new all_notifications_adapter(notificationsList,context,notifications_List,srl));
+            all_notifications_adapter adapter=new all_notifications_adapter(notificationsList,context,notifications_List,srl);
+             notifications_List.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         }else{
+
+
             Toast.makeText(context,"No Notifications Yet",Toast.LENGTH_LONG).show();
         }
     }

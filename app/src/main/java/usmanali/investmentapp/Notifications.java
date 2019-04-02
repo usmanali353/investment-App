@@ -45,7 +45,7 @@ SwipeRefreshLayout srl;
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==android.R.id.home){
             if(user_infoList.get(0).getUser_type().equals("Admin")){
-                startActivity(new Intent(this,Admin_home.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK));
+                startActivity(new Intent(this,Admin_home.class));
                 finish();
             }else{
                 startActivity(new Intent(this,user_home.class));
