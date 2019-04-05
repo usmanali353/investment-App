@@ -50,16 +50,21 @@ public class all_notifications_adapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+        notification_viewholder vh;
         if(convertView==null) {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.notification_layout, parent, false);
+            vh=new notification_viewholder();
+            vh.notification_text=convertView.findViewById(R.id.notification_txt);
+            vh.notification_date=convertView.findViewById(R.id.notification_date);
+            convertView.setTag(vh);
         }
-            TextView notification_text = convertView.findViewById(R.id.notification_txt);
-            TextView notification_date = convertView.findViewById(R.id.notification_date);
-            notification_text.setText(notificationsList.get(position).notification_text);
+
+          vh= (notification_viewholder) convertView.getTag();
+            vh.notification_text.setText(notificationsList.get(position).notification_text);
             CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
                     Long.parseLong(notificationsList.get(position).notification_date),
                     System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS);
-            notification_date.setText(timeAgo);
+            vh.notification_date.setText(timeAgo);
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -71,9 +76,9 @@ public class all_notifications_adapter extends BaseAdapter {
                         public void onClick(DialogInterface dialog, int which) {
                             new approve_notifications_task(context).execute(String.valueOf(notificationsList.get(position).id));
                             new send_withdrawal_request_task(context).execute(String.valueOf(System.currentTimeMillis()),"Your withdraw Request for Rs "+notificationsList.get(position).withdraw_amount+" is Approved by admin",notificationsList.get(position).customer_email, String.valueOf(notificationsList.get(position).withdraw_amount),"Yes");
-                            //new withdraw_earning(context).execute(notificationsList.get(position).customer_email, String.valueOf(notificationsList.get(position).withdraw_amount));
+                            new withdraw_earning(context).execute(notificationsList.get(position).customer_email, String.valueOf(notificationsList.get(position).withdraw_amount));
                             new get_all_withdraw_notifications_task(context,nl,srl).execute();
-
+                            notifyDataSetChanged();
                         }
                     }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
@@ -85,5 +90,9 @@ public class all_notifications_adapter extends BaseAdapter {
             });
 
         return convertView;
+    }
+    class notification_viewholder{
+        TextView notification_text;
+        TextView notification_date;
     }
 }

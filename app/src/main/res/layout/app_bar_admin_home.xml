@@ -19,6 +19,15 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
+    <com.nightonke.boommenu.BoomMenuButton
+        android:id="@+id/bmb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bmb_buttonEnum="ham"
+        android:layout_gravity="bottom|end"
+        app:bmb_piecePlaceEnum="piecePlace_ham_5"
+        app:bmb_buttonPlaceEnum="buttonPlace_ham_5"
+        />
 
     <include layout="@layout/content_admin_home" />
 

@@ -73,8 +73,6 @@ public class get_all_withdraw_notifications_task extends AsyncTask {
              notifications_List.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }else{
-
-
             Toast.makeText(context,"No Notifications Yet",Toast.LENGTH_LONG).show();
         }
     }

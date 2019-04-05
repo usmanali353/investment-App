@@ -33,16 +33,24 @@ public class notifications_list_adapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        customer_notification_viewholder vh;
         if(convertView==null) {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.notification_layout, parent, false);
+             vh=new customer_notification_viewholder();
+             vh.notification_text=convertView.findViewById(R.id.notification_txt);
+             vh.notification_date=convertView.findViewById(R.id.notification_date);
+             convertView.setTag(vh);
         }
-        TextView notification_text=convertView.findViewById(R.id.notification_txt);
-        TextView notification_date=convertView.findViewById(R.id.notification_date);
-        notification_text.setText(notificationsList.get(position).notification_text);
+         vh= (customer_notification_viewholder) convertView.getTag();
+        vh.notification_text.setText(notificationsList.get(position).notification_text);
         CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
                                  Long.parseLong(notificationsList.get(position).notification_date),
                                  System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS);
-        notification_date.setText(timeAgo);
+        vh.notification_date.setText(timeAgo);
         return convertView;
+    }
+    class customer_notification_viewholder{
+        TextView notification_text;
+        TextView notification_date;
     }
 }

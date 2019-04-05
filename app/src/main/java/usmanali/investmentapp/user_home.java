@@ -146,7 +146,6 @@ public class user_home extends AppCompatActivity
 
                    }else {
                        new send_withdrawal_request_task(user_home.this).execute(String.valueOf(System.currentTimeMillis()),user_infoList.get(0).email+" has requested withdraw of Rs "+profit.getText().toString(),user_infoList.get(0).email,profit.getText().toString(),"No");
-                       new withdraw_earning(user_home.this).execute(prefs.getString("email",null),profit.getText().toString());
                        new login_task(user_home.this,prefs.getBoolean("keep_info",false)).execute(user_infoList.get(0).email,user_infoList.get(0).password,user_infoList.get(0).email);
                    }
                }

@@ -1,11 +1,14 @@
 package usmanali.investmentapp.AsyncTasks;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -91,11 +94,12 @@ SharedPreferences prefs;
                 prefs.edit().putBoolean("keep_info", false).apply();
             }
             if(user_info.get(0).getUser_type().equals("Admin")){
-                context.startActivity(new Intent(context,Admin_home.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                System.exit(0);
+                context.startActivity(new Intent(context,Admin_home.class));
+
+                ((AppCompatActivity)context).finish();
             }else {
-                context.startActivity(new Intent(context, user_home.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                System.exit(0);
+                context.startActivity(new Intent(context, user_home.class));
+                ((AppCompatActivity)context).finish();
             }
         }else {
             Toast.makeText(context,"Provide Valid email and password",Toast.LENGTH_LONG).show();
