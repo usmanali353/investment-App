@@ -18,6 +18,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import usmanali.investmentapp.all_notifications_adapter;
@@ -74,6 +75,10 @@ public class get_all_withdraw_notifications_task extends AsyncTask {
             adapter.notifyDataSetChanged();
         }else{
             Toast.makeText(context,"No Notifications Yet",Toast.LENGTH_LONG).show();
+            ArrayList<withdraw_notifications> notificationsArrayList=new ArrayList<>();
+            all_notifications_adapter adapter=new all_notifications_adapter(notificationsArrayList,context,notifications_List,srl);
+            notifications_List.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         }
     }
     @Override

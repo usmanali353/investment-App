@@ -32,21 +32,15 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.nightonke.boommenu.BoomButtons.BoomButton;
 import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomMenuButton;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-
 import fr.ganfra.materialspinner.MaterialSpinner;
 import usmanali.investmentapp.AsyncTasks.delete_customer_task;
 import usmanali.investmentapp.AsyncTasks.get_IB_customer_task;
-import usmanali.investmentapp.AsyncTasks.login_task;
 import usmanali.investmentapp.AsyncTasks.register_task;
-import usmanali.investmentapp.AsyncTasks.send_withdrawal_request_task;
 import usmanali.investmentapp.AsyncTasks.update_profit_task;
 
 public class Admin_home extends AppCompatActivity
