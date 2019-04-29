@@ -2,9 +2,7 @@ package usmanali.investmentapp.AsyncTasks;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -14,32 +12,36 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
-public class update_profit_task extends AsyncTask<String,Void,String> {
-    Context context;
-     SharedPreferences prefs;
-    public update_profit_task(Context context) {
+public class send_profit_shared_notification extends AsyncTask<String,Void,String> {
+StringBuilder sb=new StringBuilder();
+
+    public send_profit_shared_notification(Context context) {
         this.context = context;
         pd=new ProgressDialog(context);
-        pd.setMessage("Please Wait...");
-        prefs= PreferenceManager.getDefaultSharedPreferences(context);
+        pd.setMessage("Please Wait....");
     }
 
-    ProgressDialog pd;
-    StringBuilder sb=new StringBuilder();
+    Context context;
+ProgressDialog pd;
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+        if(pd.isShowing())
+            pd.dismiss();
+        Toast.makeText(context,s,Toast.LENGTH_LONG).show();
+    }
 
     @Override
     protected String doInBackground(String... strings) {
-        String profit=strings[0];
+        String text=strings[0];
+        String date=strings[1];
         try {
-            URL url=new URL("https://helloworldsolution12.000webhostapp.com/update_profit.php");
+            URL url=new URL("https://helloworldsolution12.000webhostapp.com/sendprofit_noti.php");
             HttpURLConnection connection= (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             BufferedWriter writer =new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
-            String info=URLEncoder.encode("profit","UTF-8")+"="+URLEncoder.encode(profit,"UTF-8");
+            String info= URLEncoder.encode("text","UTF-8")+"="+URLEncoder.encode(text,"UTF-8")+"&"+URLEncoder.encode("date","UTF-8")+"="+URLEncoder.encode(date,"UTF-8");
             writer.write(info);
             writer.flush();
             writer.close();
@@ -52,19 +54,6 @@ public class update_profit_task extends AsyncTask<String,Void,String> {
             e.printStackTrace();
         }
         return sb.toString();
-    }
-
-    @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-        if(pd.isShowing())
-            pd.dismiss();
-        Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-        String formattedDate = df.format(c);
-        Toast.makeText(context,s,Toast.LENGTH_LONG).show();
-        new send_profit_shared_notification(context).execute("Admin has shared the profit",formattedDate);
-        prefs.edit().putString("shared_profit",formattedDate).apply();
     }
 
     @Override

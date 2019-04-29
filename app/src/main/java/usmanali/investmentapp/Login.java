@@ -47,13 +47,13 @@ CheckBox cb;
             @Override
             public void onClick(View v) {
                 if(email.getText().toString().isEmpty()){
-                    email.setError("Email is Required");
+                    email.setError("CNIC is Required");
                 }else if(password.getText().toString().isEmpty()){
                     password.setError("Password is required");
                 }else if(password.getText().toString().length()<6){
                     password.setError("Password is too short");
                 }else{
-                   new login_task(Login.this,cb.isChecked()).execute(email.getText().toString(),password.getText().toString(),email.getText().toString());
+                   new login_task(Login.this,cb.isChecked()).execute(email.getText().toString(),password.getText().toString());
                 }
             }
         });

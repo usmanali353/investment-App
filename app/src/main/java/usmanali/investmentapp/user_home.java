@@ -77,6 +77,7 @@ public class user_home extends AppCompatActivity
         model.add(new dashboard_model(R.drawable.investment_icon,"Your Investment"));
         model.add(new dashboard_model(R.drawable.return_on_investment,"Your Earning"));
         list.setAdapter(new dashboard_adapter(model,user_home.this));
+       // new login_task(user_home.this,prefs.getBoolean("keep_info",false)).execute(user_infoList.get(0).getCNIC(),user_infoList.get(0).password);
     }
 
     @Override
@@ -130,6 +131,7 @@ public class user_home extends AppCompatActivity
                    .setPositiveButton("Redeem", new DialogInterface.OnClickListener() {
                        @Override
                        public void onClick(DialogInterface dialog, int which) {
+
                        }
                    }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                        @Override
@@ -145,17 +147,27 @@ public class user_home extends AppCompatActivity
                        profit.setError("Enter Earning");
 
                    }else {
-                       new send_withdrawal_request_task(user_home.this).execute(String.valueOf(System.currentTimeMillis()),user_infoList.get(0).email+" has requested withdraw of Rs "+profit.getText().toString(),user_infoList.get(0).email,profit.getText().toString(),"No");
-                       new login_task(user_home.this,prefs.getBoolean("keep_info",false)).execute(user_infoList.get(0).email,user_infoList.get(0).password,user_infoList.get(0).email);
+                       new send_withdrawal_request_task(user_home.this).execute(String.valueOf(System.currentTimeMillis()),user_infoList.get(0).getCNIC()+" has requested withdraw of Rs "+profit.getText().toString(),user_infoList.get(0).getCNIC(),profit.getText().toString(),"No");
+
                    }
                }
            });
        }else if(id==R.id.signout){
            prefs.edit().remove("user_info").apply();
            prefs.edit().remove("keep_info").apply();
+           prefs.edit().remove("shared_profit").apply();
            finish();
        }else if(id==R.id.withdraw_request){
            startActivity(new Intent(user_home.this,Notifications.class).putExtra("role","Customer"));
+       }else if(id==R.id.share){
+           String message = "https://drive.google.com/file/d/1efVfZqVylcqj7QMaEC5fnVyj7_USS9LC/view?usp=sharing";
+           Intent share = new Intent(Intent.ACTION_SEND);
+           share.setType("text/plain");
+           share.putExtra(Intent.EXTRA_TEXT, message);
+           startActivity(Intent.createChooser(share, "Where you want to share it"));
+       }else if(id==R.id.profit_history){
+           startActivity(new Intent(user_home.this,Profit_history.class));
+           finish();
        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -168,6 +180,7 @@ public class user_home extends AppCompatActivity
         if(!prefs.getBoolean("keep_info",false)){
             prefs.edit().remove("user_info").apply();
             prefs.edit().remove("keep_info").apply();
+            prefs.edit().remove("shared_profit").apply();
         }
     }
 }

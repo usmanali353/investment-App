@@ -8,6 +8,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -26,19 +28,19 @@ SwipeRefreshLayout srl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_notifications);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         prefs=PreferenceManager.getDefaultSharedPreferences(this);
         srl=findViewById(R.id.swipe_refresh);
         user_infoList=new Gson().fromJson(prefs.getString("user_info",""),new TypeToken<List<user_info>>(){}.getType());
         notification_list=findViewById(R.id.notification_list);
+            new fetch_withdraw_notifications(this, notification_list,srl).execute(user_infoList.get(0).getCNIC());
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if(getIntent().getStringExtra("role").equals("Customer")) {
-            new fetch_withdraw_notifications(this, notification_list,srl).execute(user_infoList.get(0).email);
-        }else{
-            new get_all_withdraw_notifications_task(this, notification_list,srl).execute();
-        }
+            //new get_all_withdraw_notifications_task(this, notification_list,srl).execute();
     }
 
     @Override

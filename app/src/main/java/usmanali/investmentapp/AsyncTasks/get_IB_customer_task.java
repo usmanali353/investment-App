@@ -99,7 +99,7 @@ public class get_IB_customer_task extends AsyncTask {
                 }
             });
             for(int i=0;i<ib_customer_list.size();i++){
-                ib_customers_emails.add(ib_customer_list.get(i).getEmail());
+                ib_customers_emails.add(ib_customer_list.get(i).getCNIC());
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, ib_customers_emails);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -134,18 +134,16 @@ public class get_IB_customer_task extends AsyncTask {
                         investment.setError("Investment is Required");
                     }else if(password.getText().toString().length()<6){
                         password.setError("Password too short");
-                    }else if(Integer.valueOf(investment.getText().toString())<1000){
-                        investment.setError("Minimium investment that can be made is Rs 1000");
+                    }else if(Integer.valueOf(investment.getText().toString())<100){
+                        investment.setError("Minimium investment that can be made is Rs 100");
                     }else if(father_name.getText().toString().isEmpty()){
                         father_name.setError("Father Name is Required");
                     }else if(cnic.getText().toString().isEmpty()){
                         cnic.setError("CNIC is Required");
-                    }else if(cnic.getText().toString().length()<13){
-                        cnic.setError("CNIC is too short");
+                    }else if(cnic.getText().toString().length()<5){
+                        cnic.setError("Account no is too short");
                     }else if(percentage_profit.getText().toString().isEmpty()){
                         percentage_profit.setError("Percentage Profit is Required");
-                    }else if(Integer.valueOf(percentage_profit.getText().toString())<10){
-                        percentage_profit.setError("Profit Percentage should be atleast 10 percent");
                     }else if(spinner.getSelectedItem().toString().equals("Select IB")) {
                         spinner.setError("Select IB");
                     }else if(ib_percentage_profit.getText().toString().isEmpty()){

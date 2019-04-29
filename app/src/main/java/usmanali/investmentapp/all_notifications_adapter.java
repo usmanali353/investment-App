@@ -68,24 +68,7 @@ public class all_notifications_adapter extends BaseAdapter {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder confirm_dialog = new AlertDialog.Builder(context);
-                    confirm_dialog.setTitle("Approve Withdraw Request");
-                    confirm_dialog.setMessage("Do you Want to Approve this withdraw request?");
-                    confirm_dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            new approve_notifications_task(context).execute(String.valueOf(notificationsList.get(position).id));
-                            new send_withdrawal_request_task(context).execute(String.valueOf(System.currentTimeMillis()),"Your withdraw Request for Rs "+notificationsList.get(position).withdraw_amount+" is Approved by admin",notificationsList.get(position).customer_email, String.valueOf(notificationsList.get(position).withdraw_amount),"Yes");
-                            new withdraw_earning(context).execute(notificationsList.get(position).customer_email, String.valueOf(notificationsList.get(position).withdraw_amount));
-                            new get_all_withdraw_notifications_task(context,nl,srl).execute();
-                            notifyDataSetChanged();
-                        }
-                    }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).show();
+
                 }
             });
 

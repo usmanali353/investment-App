@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/ib_profit_txt"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 />
 
         </android.support.design.widget.TextInputLayout>
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/cnic_textinputlayout"
             android:layout_below="@+id/father_name_textinputlayout"
-            android:hint="CNIC"
+            android:hint="Account no"
             android:layout_margin="6dp"
             >
             <android.support.design.widget.TextInputEditText
@@ -143,7 +143,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/profit_txt"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 />
 
         </android.support.design.widget.TextInputLayout>

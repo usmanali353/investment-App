@@ -86,7 +86,7 @@ public class fetch_withdraw_notifications extends AsyncTask<String,Void,Void> {
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new fetch_withdraw_notifications(context,notification_list,srl).execute(user_infoList.get(0).getEmail());
+                new fetch_withdraw_notifications(context,notification_list,srl).execute(user_infoList.get(0).getCNIC());
             }
         });
         if(notificationsList!=null&&notificationsList.size()>0){

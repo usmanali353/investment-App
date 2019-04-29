@@ -56,6 +56,7 @@ public class get_all_accounts extends AsyncTask{
         super.onPostExecute(o);
         if(pd.isShowing())
             pd.dismiss();
+
         if(userInfoList!=null&&userInfoList.size()>0){
             LegacyTableView.insertLegacyTitle(titles);
             notifications_List.setTitle(LegacyTableView.readLegacyTitle());

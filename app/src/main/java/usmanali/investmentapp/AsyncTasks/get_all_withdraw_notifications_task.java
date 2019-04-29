@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,26 +20,33 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import usmanali.investmentapp.all_notifications_adapter;
+import usmanali.investmentapp.expandable_list_adapter;
 import usmanali.investmentapp.withdraw_notifications;
 
 public class get_all_withdraw_notifications_task extends AsyncTask {
     ProgressDialog pd;
     Context context;
-    ListView notifications_List;
+    ExpandableListView notifications_List;
     String json;
-    List<withdraw_notifications> notificationsList;
+    ArrayList<withdraw_notifications> notificationsList,approved_notifications,unapproved_notifications;
+   ArrayList<String> header_list;
+    HashMap<String,ArrayList<withdraw_notifications>> childs;
     StringBuilder sb=new StringBuilder();
-    SwipeRefreshLayout srl;
-    public get_all_withdraw_notifications_task(Context context, ListView notificationsList, SwipeRefreshLayout srl) {
+
+    //SwipeRefreshLayout srl;
+    public get_all_withdraw_notifications_task(Context context, ExpandableListView notificationsList) {
         this.context = context;
         pd=new ProgressDialog(context);
         pd.setMessage("Please Wait...");
         pd.setCancelable(false);
         this.notifications_List=notificationsList;
-        this.srl=srl;
+        approved_notifications=new ArrayList<>();
+        unapproved_notifications=new ArrayList<>();
+        header_list=new ArrayList<>();
+        childs=new HashMap<>();
     }
 
     @Override
@@ -51,7 +59,7 @@ public class get_all_withdraw_notifications_task extends AsyncTask {
             while((json=reader.readLine())!=null){
                 sb.append(json);
             }
-            notificationsList=new Gson().fromJson(sb.toString(),new TypeToken<List<withdraw_notifications>>(){}.getType());
+            notificationsList=new Gson().fromJson(sb.toString(),new TypeToken<ArrayList<withdraw_notifications>>(){}.getType());
             //reader.close();
             Log.e("json",sb.toString());
         } catch (Exception e) {
@@ -62,29 +70,30 @@ public class get_all_withdraw_notifications_task extends AsyncTask {
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
-         srl.setRefreshing(false);
-         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-             @Override
-             public void onRefresh() {
-               new get_all_withdraw_notifications_task(context,notifications_List,srl).execute();
-             }
-         });
+        pd.dismiss();
         if(notificationsList!=null&&notificationsList.size()>0){
-            all_notifications_adapter adapter=new all_notifications_adapter(notificationsList,context,notifications_List,srl);
-             notifications_List.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
+           for(int i=0;i<notificationsList.size();i++){
+               if(notificationsList.get(i).getApproved().equals("No")){
+                   unapproved_notifications.add(notificationsList.get(i));
+               }else{
+                   approved_notifications.add(notificationsList.get(i));
+               }
+           }
+           Log.e("approved_notifications", String.valueOf(approved_notifications.size()));
+           Log.e("unapproved_notification", String.valueOf(unapproved_notifications.size()));
+           header_list.add("Approved Notifications");
+           header_list.add("Un Approved Notifications");
+           childs.put(header_list.get(0),approved_notifications);
+           childs.put(header_list.get(1),unapproved_notifications);
+           notifications_List.setAdapter(new expandable_list_adapter(header_list,childs,notifications_List,context));
         }else{
+
             Toast.makeText(context,"No Notifications Yet",Toast.LENGTH_LONG).show();
-            ArrayList<withdraw_notifications> notificationsArrayList=new ArrayList<>();
-            all_notifications_adapter adapter=new all_notifications_adapter(notificationsArrayList,context,notifications_List,srl);
-            notifications_List.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
         }
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-       // pd.show();
-        srl.setRefreshing(true);
+        pd.show();
     }
 }

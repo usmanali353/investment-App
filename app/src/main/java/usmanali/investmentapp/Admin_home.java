@@ -35,8 +35,12 @@ import com.google.gson.reflect.TypeToken;
 import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomMenuButton;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+
 import fr.ganfra.materialspinner.MaterialSpinner;
 import usmanali.investmentapp.AsyncTasks.delete_customer_task;
 import usmanali.investmentapp.AsyncTasks.get_IB_customer_task;
@@ -83,7 +87,14 @@ public class Admin_home extends AppCompatActivity
                             } else if (index == 3) {
                                 new get_IB_customer_task(Admin_home.this).execute();
                             } else if (index == 2) {
-                                new update_profit_task(Admin_home.this).execute(String.valueOf(user_infoList.get(0).profit_percentage));
+                                Date c = Calendar.getInstance().getTime();
+                                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+                                String formattedDate = df.format(c);
+                                if(prefs.getString("shared_profit",null)!=null&&prefs.getString("shared_profit",null).equals(formattedDate)){
+                                    Toast.makeText(Admin_home.this,"Profit is already shared",Toast.LENGTH_LONG).show();
+                                }else {
+                                    new update_profit_task(Admin_home.this).execute(String.valueOf(user_infoList.get(0).profit_percentage));
+                                }
                             } else if (index == 0) {
                                  add_customer();
                             }else if(index==4){
@@ -149,6 +160,8 @@ public class Admin_home extends AppCompatActivity
         super.onDestroy();
         if(!prefs.getBoolean("keep_info",false)){
             prefs.edit().remove("user_info").apply();
+            prefs.edit().remove("keep_info").apply();
+            prefs.edit().remove("shared_profit").apply();
         }
     }
 
@@ -160,11 +173,21 @@ public class Admin_home extends AppCompatActivity
            if(id==R.id.signout){
                prefs.edit().remove("user_info").apply();
                prefs.edit().remove("keep_info").apply();
+               prefs.edit().remove("shared_profit").apply();
                finish();
            }else if(id==R.id.withdraw_request){
-               startActivity(new Intent(Admin_home.this,Notifications.class).putExtra("role","Admin"));
+               startActivity(new Intent(Admin_home.this,Admin_notifications.class).putExtra("role","Admin"));
            }else if(id==R.id.accounts_details){
                startActivity(new Intent(Admin_home.this,Account_detail.class).putExtra("role","Admin"));
+           }else if(id==R.id.share){
+               String message = "https://drive.google.com/file/d/1efVfZqVylcqj7QMaEC5fnVyj7_USS9LC/view?usp=sharing";
+               Intent share = new Intent(Intent.ACTION_SEND);
+               share.setType("text/plain");
+               share.putExtra(Intent.EXTRA_TEXT, message);
+               startActivity(Intent.createChooser(share, "Where you want to share it"));
+           }else if(id==R.id.profit_history){
+               startActivity(new Intent(Admin_home.this,Profit_history.class));
+               finish();
            }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -206,7 +229,7 @@ public class Admin_home extends AppCompatActivity
      spinner.setAdapter(adapter);
      spinner.setVisibility(View.GONE);
      AlertDialog add_user_dialog=new AlertDialog.Builder(Admin_home.this)
-             .setTitle("Add User")
+             .setTitle("Add IB")
              .setCancelable(false)
              .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                  @Override
@@ -235,9 +258,9 @@ public class Admin_home extends AppCompatActivity
              }else if(father_name.getText().toString().isEmpty()){
                  father_name.setError("Father Name is Required");
              }else if(cnic.getText().toString().isEmpty()){
-                 cnic.setError("CNIC is Required");
-             }else if(cnic.getText().toString().length()<13){
-                 cnic.setError("CNIC is too short");
+                 cnic.setError("Account no is Required");
+             }else if(cnic.getText().toString().length()<5){
+                 cnic.setError("Account no is too short");
              }else if(select_date.getText().toString().equals("Select Date")) {
                  Toast.makeText(Admin_home.this,"Please Select Date",Toast.LENGTH_LONG).show();
              }else{
@@ -301,18 +324,16 @@ public class Admin_home extends AppCompatActivity
                  investment.setError("Investment is Required");
              }else if(password.getText().toString().length()<6){
                  password.setError("Password too short");
-             }else if(Integer.valueOf(investment.getText().toString())<1000){
-                 investment.setError("Minimium investment that can be made is Rs 1000");
+             }else if(Integer.valueOf(investment.getText().toString())<100){
+                 investment.setError("Minimium investment that can be made is Rs 100");
              }else if(father_name.getText().toString().isEmpty()){
                  father_name.setError("Father Name is Required");
              }else if(cnic.getText().toString().isEmpty()){
-                 cnic.setError("CNIC is Required");
-             }else if(cnic.getText().toString().length()<13){
-                 cnic.setError("CNIC is too short");
+                 cnic.setError("Account no is Required");
+             }else if(cnic.getText().toString().length()<5){
+                 cnic.setError("Account no is too short");
              }else if(percentage_profit.getText().toString().isEmpty()){
                  percentage_profit.setError("Percentage Profit is Required");
-             }else if(Integer.valueOf(percentage_profit.getText().toString())<10){
-                 percentage_profit.setError("Profit Percentage should be atleast 10 percent");
              }else if(select_date.getText().toString().equals("Select Date")) {
                  Toast.makeText(Admin_home.this,"Please Select Date",Toast.LENGTH_LONG).show();
              }else if(investment_period.getText().toString().isEmpty()){
@@ -327,11 +348,11 @@ public class Admin_home extends AppCompatActivity
      View send_profit_view=LayoutInflater.from(Admin_home.this).inflate(R.layout.give_profit,null);
      final TextInputEditText profit=send_profit_view.findViewById(R.id.profit_txt);
      TextInputLayout txt=send_profit_view.findViewById(R.id.profit_textinputlayout);
-     txt.setHint("Account no or Email");
+     txt.setHint("Account no");
       profit.setInputType(InputType.TYPE_CLASS_TEXT);
      AlertDialog send_profit_dialog=new AlertDialog.Builder(Admin_home.this)
              .setTitle("Delete Customer")
-             .setMessage("Enter Email or Account no to delete")
+             .setMessage("Enter Account no to delete")
              .setPositiveButton("Remove", new DialogInterface.OnClickListener() {
                  @Override
                  public void onClick(DialogInterface dialog, int which) {
@@ -348,9 +369,9 @@ public class Admin_home extends AppCompatActivity
          @Override
          public void onClick(View v) {
              if(profit.getText().toString().isEmpty()){
-                 profit.setError("Enter Account no or Email");
+                 profit.setError("Enter Account no");
              }else {
-                new delete_customer_task(Admin_home.this).execute(profit.getText().toString(),profit.getText().toString());
+                new delete_customer_task(Admin_home.this).execute(profit.getText().toString());
              }
          }
      });

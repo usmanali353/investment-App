@@ -11,4 +11,6 @@
     <string name="title_activity_admin_home">Admin Page</string>
     <string name="title_activity_notifications">Notifications</string>
     <string name="title_activity_account_detail">Accounts Detail</string>
+    <string name="title_activity_admin_notifications">Admin Notifications</string>
+    <string name="title_activity_profit_history">Profit History</string>
 </resources>

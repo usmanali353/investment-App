@@ -51,7 +51,7 @@ public class user_info {
         this.opening_date = opening_date;
     }
 
-    public int getInvestment() {
+    public float getInvestment() {
         return investment;
     }
 
@@ -59,7 +59,7 @@ public class user_info {
         this.investment = investment;
     }
 
-    public int getEarning() {
+    public float getEarning() {
         return earning;
     }
 
@@ -91,7 +91,7 @@ public class user_info {
         this.user_type = user_type;
     }
 
-    public int getProfit_percentage() {
+    public float getProfit_percentage() {
         return profit_percentage;
     }
 
@@ -115,10 +115,10 @@ public class user_info {
     String password;
     String referer_email;
     String opening_date;
-    int investment;
-    int earning;
+    float investment;
+    float earning;
     int id;
     String Name;
     String user_type;
-    int profit_percentage;
+    float profit_percentage;
 }

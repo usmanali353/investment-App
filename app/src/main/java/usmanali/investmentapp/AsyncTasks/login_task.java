@@ -55,13 +55,12 @@ SharedPreferences prefs;
     protected Void doInBackground(String... strings) {
         String email=strings[0];
         String password=strings[1];
-        String cnic=strings[2];
         try {
             URL url=new URL("https://helloworldsolution12.000webhostapp.com/get_user_info.php");
             HttpURLConnection connection= (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
-            String info=URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"+URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(password,"UTF-8")+"&"+URLEncoder.encode("cnic","UTF-8")+"="+URLEncoder.encode(cnic,"UTF-8");
+            String info=URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"+URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(password,"UTF-8");
             writer.write(info);
             writer.flush();
             writer.close();
@@ -102,7 +101,7 @@ SharedPreferences prefs;
                 ((AppCompatActivity)context).finish();
             }
         }else {
-            Toast.makeText(context,"Provide Valid email and password",Toast.LENGTH_LONG).show();
+            Toast.makeText(context,"Provide Account no and password",Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -35,14 +35,13 @@ public class delete_customer_task extends AsyncTask<String,Void,String> {
 
     @Override
     protected String doInBackground(String... strings) {
-        String email=strings[0];
-        String cnic=strings[1];
+        String cnic=strings[0];
         try {
             URL url=new URL("https://helloworldsolution12.000webhostapp.com/delete_customer.php");
             HttpURLConnection connection= (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
-            String info= URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"+URLEncoder.encode("cnic","UTF-8")+"="+URLEncoder.encode(cnic,"UTF-8");
+            String info= URLEncoder.encode("cnic","UTF-8")+"="+URLEncoder.encode(cnic,"UTF-8");
             writer.write(info);
             writer.flush();
             writer.close();
