@@ -2,7 +2,9 @@ package usmanali.investmentapp;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -24,13 +26,15 @@ public class get_all_accounts extends AsyncTask{
     String json;
     List<user_info> userInfoList;
     StringBuilder sb=new StringBuilder();
-    String[] titles={"Name","CNIC","Email","Investment","Earning","Profit Percentage","Referor Email","Account Opening Date","Investment Period","User Type"};
+    LocalBroadcastManager localBroadcastManager;
+    String[] titles={"Name","CNIC","Email","Investment","Earning","Profit Percentage","Referor IB","Account Opening Date","Investment Period","User Type"};
     public get_all_accounts(Context context,LegacyTableView tableView) {
         this.context = context;
         pd=new ProgressDialog(context);
         pd.setMessage("Please Wait...");
         pd.setCancelable(false);
         this.notifications_List=tableView;
+        localBroadcastManager=LocalBroadcastManager.getInstance(context);
     }
 
     @Override
@@ -68,6 +72,9 @@ public class get_all_accounts extends AsyncTask{
                 notifications_List.setShowZoomControls(true);
             notifications_List.setContent(LegacyTableView.readLegacyContent());
             notifications_List.build();
+            Intent i=new Intent("all_account_data");
+            i.putExtra("all_account_data",new Gson().toJson(userInfoList));
+            localBroadcastManager.sendBroadcast(i);
         }else{
             Toast.makeText(context,"No Accounts Found",Toast.LENGTH_LONG).show();
         }
