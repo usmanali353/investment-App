@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -44,6 +45,7 @@ import java.util.Date;
 import fr.ganfra.materialspinner.MaterialSpinner;
 import usmanali.investmentapp.AsyncTasks.delete_customer_task;
 import usmanali.investmentapp.AsyncTasks.get_IB_customer_task;
+import usmanali.investmentapp.AsyncTasks.get_specific_user_data;
 import usmanali.investmentapp.AsyncTasks.register_task;
 import usmanali.investmentapp.AsyncTasks.update_profit_task;
 
@@ -188,6 +190,8 @@ public class Admin_home extends AppCompatActivity
            }else if(id==R.id.profit_history){
                startActivity(new Intent(Admin_home.this,Profit_history.class));
                finish();
+           }else if(id==R.id.update_info){
+               update_info();
            }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -202,7 +206,7 @@ public class Admin_home extends AppCompatActivity
         select_date.setText(String.valueOf(day)+"."+String.valueOf(month+1)+"."+String.valueOf(year));
     }
  private void add_ib(){
-     View add_user_view=LayoutInflater.from(Admin_home.this).inflate(R.layout.add_user_layout,null);
+     final View add_user_view=LayoutInflater.from(Admin_home.this).inflate(R.layout.add_user_layout,null);
      final TextInputEditText name=add_user_view.findViewById(R.id.name_txt);
      final TextInputEditText email=add_user_view.findViewById(R.id.email_txt);
      final TextInputEditText password=add_user_view.findViewById(R.id.password_txt);
@@ -264,14 +268,20 @@ public class Admin_home extends AppCompatActivity
              }else if(select_date.getText().toString().equals("Select Date")) {
                  Toast.makeText(Admin_home.this,"Please Select Date",Toast.LENGTH_LONG).show();
              }else{
-
                      new register_task(Admin_home.this).execute(name.getText().toString(), email.getText().toString(), password.getText().toString(), String.valueOf(0), father_name.getText().toString(), cnic.getText().toString(), "IB", String.valueOf(0), "", select_date.getText().toString(), "");
+                     name.setText("");
+                     cnic.setText("");
+                     father_name.setText("");
+                     password.setText("");
+                     email.setText("");
+                     select_date.setText("Select Date");
+
              }
          }
      });
  }
  private void add_customer(){
-     View add_user_view=LayoutInflater.from(Admin_home.this).inflate(R.layout.add_user_layout,null);
+     final View add_user_view=LayoutInflater.from(Admin_home.this).inflate(R.layout.add_user_layout,null);
      final TextInputEditText name=add_user_view.findViewById(R.id.name_txt);
      final TextInputEditText email=add_user_view.findViewById(R.id.email_txt);
      final TextInputEditText password=add_user_view.findViewById(R.id.password_txt);
@@ -340,12 +350,21 @@ public class Admin_home extends AppCompatActivity
                  investment_period.setError("Investment Period is Required");
              }else{
                  new register_task(Admin_home.this).execute(name.getText().toString(), email.getText().toString(), password.getText().toString(), investment.getText().toString(), father_name.getText().toString(), cnic.getText().toString(), "Customer", percentage_profit.getText().toString(), "", select_date.getText().toString(), investment_period.getText().toString());
+                 name.setText("");
+                 cnic.setText("");
+                 father_name.setText("");
+                 password.setText("");
+                 email.setText("");
+                 percentage_profit.setText("");
+                 investment.setText("");
+                 investment_period.setText("");
+                 select_date.setText("Select Date");
              }
          }
      });
  }
  private void delete_customer(){
-     View send_profit_view=LayoutInflater.from(Admin_home.this).inflate(R.layout.give_profit,null);
+     final View send_profit_view=LayoutInflater.from(Admin_home.this).inflate(R.layout.give_profit,null);
      final TextInputEditText profit=send_profit_view.findViewById(R.id.profit_txt);
      TextInputLayout txt=send_profit_view.findViewById(R.id.profit_textinputlayout);
      txt.setHint("Account no");
@@ -372,6 +391,40 @@ public class Admin_home extends AppCompatActivity
                  profit.setError("Enter Account no");
              }else {
                 new delete_customer_task(Admin_home.this).execute(profit.getText().toString());
+                profit.setText("");
+             }
+         }
+     });
+ }
+ private void update_info(){
+     final View send_profit_view=LayoutInflater.from(Admin_home.this).inflate(R.layout.give_profit,null);
+     final TextInputEditText profit=send_profit_view.findViewById(R.id.profit_txt);
+     TextInputLayout txt=send_profit_view.findViewById(R.id.profit_textinputlayout);
+     txt.setHint("Account no");
+     profit.setInputType(InputType.TYPE_CLASS_TEXT);
+     AlertDialog send_profit_dialog=new AlertDialog.Builder(Admin_home.this)
+             .setTitle("Update Customer Info")
+             .setMessage("Enter Account no to Update")
+             .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                 @Override
+                 public void onClick(DialogInterface dialog, int which) {
+
+                 }
+             }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                 @Override
+                 public void onClick(DialogInterface dialog, int which) {
+                     dialog.dismiss();
+                 }
+             }).setView(send_profit_view).create();
+     send_profit_dialog.show();
+     send_profit_dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+             if(profit.getText().toString().isEmpty()){
+                 profit.setError("Enter Account no");
+             }else {
+                 new get_specific_user_data(Admin_home.this).execute(profit.getText().toString());
+                  profit.setText("");
              }
          }
      });

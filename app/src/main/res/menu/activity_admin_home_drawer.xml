@@ -4,10 +4,7 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-       <item
-        android:title="Sign Out"
-        android:icon="@drawable/logout"
-        android:id="@+id/signout"/>
+
         <item
             android:title="Withdraw Requests"
             android:icon="@drawable/withdraw_request"
@@ -16,15 +13,23 @@
             android:title="Accounts Details"
             android:icon="@drawable/ic_account_circle_black_24dp"
             android:id="@+id/accounts_details"/>
+
+        <item
+            android:title="Update Info"
+            android:icon="@drawable/ic_update_black_24dp"
+            android:id="@+id/update_info"/>
+        <item
+            android:title="Profit History"
+            android:icon="@drawable/ic_history_black_24dp"
+            android:id="@+id/profit_history"/>
         <item
             android:title="Share"
             android:icon="@drawable/ic_share_black_24dp"
             android:id="@+id/share"/>
         <item
-            android:title="Profit History"
-             android:icon="@drawable/ic_history_black_24dp"
-            android:id="@+id/profit_history"/>
-
+            android:title="Sign Out"
+            android:icon="@drawable/logout"
+            android:id="@+id/signout"/>
     </group>
 
 </menu>

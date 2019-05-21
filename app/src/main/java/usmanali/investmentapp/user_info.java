@@ -9,8 +9,6 @@ public class user_info {
         this.email = email;
     }
 
-
-
     public String getFather_name() {
         return father_name;
     }

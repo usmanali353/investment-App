@@ -97,36 +97,42 @@ public class Account_detail extends AppCompatActivity {
                 }
             }
         }else if(item.getItemId()==R.id.filter_by_customer){
-                for (int i=0;i<userInfoList.size();i++){
-                    if(userInfoList.get(i).getUser_type().equals("Customer")) {
-                        LegacyTableView.insertLegacyContent(userInfoList.get(i).Name, userInfoList.get(i).CNIC, userInfoList.get(i).email, String.valueOf(userInfoList.get(i).investment), String.valueOf(userInfoList.get(i).earning), String.valueOf(userInfoList.get(i).profit_percentage), userInfoList.get(i).referer_email, userInfoList.get(i).opening_date, userInfoList.get(i).investment_period, userInfoList.get(i).user_type);
+                if(userInfoList!=null&&userInfoList.size()>0) {
+                    for (int i = 0; i < userInfoList.size(); i++) {
+                        if (userInfoList.get(i).getUser_type().equals("Customer")) {
+                            LegacyTableView.insertLegacyContent(userInfoList.get(i).Name, userInfoList.get(i).CNIC, userInfoList.get(i).email, String.valueOf(userInfoList.get(i).investment), String.valueOf(userInfoList.get(i).earning), String.valueOf(userInfoList.get(i).profit_percentage), userInfoList.get(i).referer_email, userInfoList.get(i).opening_date, userInfoList.get(i).investment_period, userInfoList.get(i).user_type);
+                        }
                     }
-                }
 
-                table.setZoomEnabled(true);
-                table.setShowZoomControls(true);
-                table.setContent(LegacyTableView.readLegacyContent());
-                table.rebuild();
+                    table.setZoomEnabled(true);
+                    table.setShowZoomControls(true);
+                    table.setContent(LegacyTableView.readLegacyContent());
+                    table.rebuild();
+                }
             }else if(item.getItemId()==R.id.filter_by_ib){
-                for (int i=0;i<userInfoList.size();i++){
-                    if(userInfoList.get(i).getUser_type().equals("IB")) {
+                if(userInfoList!=null&&userInfoList.size()>0) {
+                    for (int i = 0; i < userInfoList.size(); i++) {
+                        if (userInfoList.get(i).getUser_type().equals("IB")) {
+                            LegacyTableView.insertLegacyContent(userInfoList.get(i).Name, userInfoList.get(i).CNIC, userInfoList.get(i).email, String.valueOf(userInfoList.get(i).investment), String.valueOf(userInfoList.get(i).earning), String.valueOf(userInfoList.get(i).profit_percentage), userInfoList.get(i).referer_email, userInfoList.get(i).opening_date, userInfoList.get(i).investment_period, userInfoList.get(i).user_type);
+                        }
+                    }
+
+                    table.setZoomEnabled(true);
+                    table.setShowZoomControls(true);
+                    table.setContent(LegacyTableView.readLegacyContent());
+                    table.rebuild();
+                }
+            }else if(item.getItemId()==R.id.show_all){
+                if(userInfoList!=null&&userInfoList.size()>0) {
+                    for (int i = 0; i < userInfoList.size(); i++) {
                         LegacyTableView.insertLegacyContent(userInfoList.get(i).Name, userInfoList.get(i).CNIC, userInfoList.get(i).email, String.valueOf(userInfoList.get(i).investment), String.valueOf(userInfoList.get(i).earning), String.valueOf(userInfoList.get(i).profit_percentage), userInfoList.get(i).referer_email, userInfoList.get(i).opening_date, userInfoList.get(i).investment_period, userInfoList.get(i).user_type);
                     }
-                }
 
-                table.setZoomEnabled(true);
-                table.setShowZoomControls(true);
-                table.setContent(LegacyTableView.readLegacyContent());
-                table.rebuild();
-            }else if(item.getItemId()==R.id.show_all){
-                for (int i=0;i<userInfoList.size();i++){
-                        LegacyTableView.insertLegacyContent(userInfoList.get(i).Name, userInfoList.get(i).CNIC, userInfoList.get(i).email, String.valueOf(userInfoList.get(i).investment), String.valueOf(userInfoList.get(i).earning), String.valueOf(userInfoList.get(i).profit_percentage), userInfoList.get(i).referer_email, userInfoList.get(i).opening_date, userInfoList.get(i).investment_period, userInfoList.get(i).user_type);
+                    table.setZoomEnabled(true);
+                    table.setShowZoomControls(true);
+                    table.setContent(LegacyTableView.readLegacyContent());
+                    table.rebuild();
                 }
-
-                table.setZoomEnabled(true);
-                table.setShowZoomControls(true);
-                table.setContent(LegacyTableView.readLegacyContent());
-                table.rebuild();
             }else if(item.getItemId()==R.id.search){
                 View send_profit_view= LayoutInflater.from(Account_detail.this).inflate(R.layout.give_profit,null);
                 final TextInputEditText profit=send_profit_view.findViewById(R.id.profit_txt);
@@ -154,16 +160,18 @@ public class Account_detail extends AppCompatActivity {
                         if(profit.getText().toString().isEmpty()){
                             profit.setError("Enter Account no");
                         }else {
-                            for (int i=0;i<userInfoList.size();i++){
-                                if(userInfoList.get(i).getCNIC().equals(profit.getText().toString())) {
-                                    LegacyTableView.insertLegacyContent(userInfoList.get(i).Name, userInfoList.get(i).CNIC, userInfoList.get(i).email, String.valueOf(userInfoList.get(i).investment), String.valueOf(userInfoList.get(i).earning), String.valueOf(userInfoList.get(i).profit_percentage), userInfoList.get(i).referer_email, userInfoList.get(i).opening_date, userInfoList.get(i).investment_period, userInfoList.get(i).user_type);
+                            if (userInfoList != null && userInfoList.size() > 0) {
+                                for (int i = 0; i < userInfoList.size(); i++) {
+                                    if (userInfoList.get(i).getCNIC().equals(profit.getText().toString())) {
+                                        LegacyTableView.insertLegacyContent(userInfoList.get(i).Name, userInfoList.get(i).CNIC, userInfoList.get(i).email, String.valueOf(userInfoList.get(i).investment), String.valueOf(userInfoList.get(i).earning), String.valueOf(userInfoList.get(i).profit_percentage), userInfoList.get(i).referer_email, userInfoList.get(i).opening_date, userInfoList.get(i).investment_period, userInfoList.get(i).user_type);
+                                    }
                                 }
-                            }
 
-                            table.setZoomEnabled(true);
-                            table.setShowZoomControls(true);
-                            table.setContent(LegacyTableView.readLegacyContent());
-                            table.rebuild();
+                                table.setZoomEnabled(true);
+                                table.setShowZoomControls(true);
+                                table.setContent(LegacyTableView.readLegacyContent());
+                                table.rebuild();
+                            }
                         }
                     }
                 });
@@ -186,7 +194,7 @@ public class Account_detail extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     if (userInfoList != null && userInfoList.size() > 0) {
-                        File exportDir = new File(Environment.getExternalStorageDirectory(), "");
+                        File exportDir = new File(Environment.getExternalStorageDirectory(), "Investment_app_account_data");
                         if (!exportDir.exists()) {
                             exportDir.mkdirs();
                         }

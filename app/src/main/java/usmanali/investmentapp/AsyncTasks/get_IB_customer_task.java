@@ -10,6 +10,7 @@ import android.support.design.widget.TextInputEditText;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -81,7 +82,7 @@ public class get_IB_customer_task extends AsyncTask {
         if(pd.isShowing())
             pd.dismiss();
         if(ib_customer_list!=null&&ib_customer_list.size()>0){
-            View add_user_view=LayoutInflater.from(context).inflate(R.layout.add_refered_customer,null);
+            final View add_user_view=LayoutInflater.from(context).inflate(R.layout.add_refered_customer,null);
             final TextInputEditText name=add_user_view.findViewById(R.id.name_txt);
             final TextInputEditText email=add_user_view.findViewById(R.id.email_txt);
             final TextInputEditText password=add_user_view.findViewById(R.id.password_txt);
@@ -154,10 +155,22 @@ public class get_IB_customer_task extends AsyncTask {
                         investment_period.setError("Investment Period is Required");
                     }else{
                         new add_refered_customer_task(context).execute(name.getText().toString(),email.getText().toString(),password.getText().toString(),investment.getText().toString(),father_name.getText().toString(),cnic.getText().toString(),"Customer",percentage_profit.getText().toString(),spinner.getSelectedItem().toString(),ib_percentage_profit.getText().toString(),select_date.getText().toString(),investment_period.getText().toString());
+                        name.setText("");
+                        cnic.setText("");
+                        father_name.setText("");
+                        password.setText("");
+                        email.setText("");
+                        percentage_profit.setText("");
+                        investment.setText("");
+                        investment_period.setText("");
+
+                        select_date.setText("Select Date");
                     }
                 }
             });
 
+        }else{
+            Toast.makeText(context,"No Referor IB Found to Refer Customer",Toast.LENGTH_LONG).show();
         }
     }
 

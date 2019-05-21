@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".update_user_info"
+    tools:showIn="@layout/activity_update_user_info">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/root"
+            >
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/name_textinputlayout"
+                android:hint="Name"
+                android:layout_margin="6dp"
+                >
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/name_txt"
+                    android:inputType="text"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/father_name_textinputlayout"
+                android:layout_below="@+id/name_textinputlayout"
+                android:hint="Father Name"
+                android:layout_margin="6dp"
+                >
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/father_name_txt"
+                    android:inputType="text"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cnic_textinputlayout"
+                android:layout_below="@+id/father_name_textinputlayout"
+                android:hint="Account no"
+                android:layout_margin="6dp"
+                >
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cnic_txt"
+                    android:inputType="text"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/email_textinputlayout"
+                android:hint="Email"
+                android:layout_below="@+id/cnic_textinputlayout"
+                android:layout_margin="6dp"
+                >
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/email_txt"
+                    android:inputType="textEmailAddress"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/password_textinputlayout"
+                android:hint="Password"
+                app:passwordToggleEnabled="true"
+                android:layout_below="@+id/email_textinputlayout"
+                android:layout_margin="6dp"
+                >
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/password_txt"
+                    android:inputType="textPassword"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/investment_textinputlayout"
+                android:hint="Investment"
+                android:layout_below="@+id/password_textinputlayout"
+                android:layout_margin="6dp"
+                >
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/investment_txt"
+                    android:inputType="number"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/profit_textinputlayout"
+                android:hint="Profit Percentage"
+                android:layout_below="@+id/investment_textinputlayout"
+                android:layout_margin="6dp"
+                >
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profit_txt"
+                    android:inputType="numberDecimal"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/investment_period"
+                android:hint="Investment Period"
+                android:layout_below="@+id/date_textinputlayout"
+                android:layout_margin="6dp"
+                >
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/investment_period_txt"
+                    android:inputType="text"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+          <android.support.design.widget.TextInputLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/date_textinputlayout"
+              android:hint="Opening Date"
+              android:layout_margin="6dp"
+              android:layout_below="@+id/profit_textinputlayout"
+              >
+              <android.support.design.widget.TextInputEditText
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/date_txt"
+                  />
+          </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/referor_textinputlayout"
+                android:hint="IB Account Number"
+                android:layout_margin="6dp"
+                android:layout_below="@+id/investment_period"
+                >
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/referor_ac_no_txt"
+                    />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_type_textinputlayout"
+                android:hint="User Type"
+                android:layout_margin="6dp"
+                android:layout_below="@+id/referor_textinputlayout"
+                >
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/user_type_txt"
+                    />
+            </android.support.design.widget.TextInputLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:text="Update Info"
+                android:id="@+id/update"
+                android:layout_margin="10dp"
+                android:layout_below="@+id/user_type_textinputlayout"
+                />
+        </RelativeLayout>
+</ScrollView>
